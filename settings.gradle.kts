@@ -10,6 +10,9 @@ pluginManagement {
         maven("https://plugins.gradle.org/m2/")
         google()
         gradlePluginPortal()
+        maven {
+            url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
+        }
     }
 
     // configure default plugin versions
