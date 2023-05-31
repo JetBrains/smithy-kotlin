@@ -4,8 +4,10 @@
  */
 buildscript {
     val atomicFuVersion: String by project
+    val kotlin_repo_url: String? by project
     repositories {
         mavenCentral()
+        kotlin_repo_url?.also { maven(it) }
     }
 
     dependencies {

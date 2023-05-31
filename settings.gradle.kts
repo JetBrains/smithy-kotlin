@@ -5,27 +5,30 @@
 
 pluginManagement {
     repositories {
+        val kotlin_repo_url: String? by settings
+        logger.info("[COMMUNITY_PROJECT_BUILD] kotlin repository url: $kotlin_repo_url")
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
         google()
         gradlePluginPortal()
-        maven {
-            url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
-        }
+        kotlin_repo_url?.also { maven(it) }
     }
 
     // configure default plugin versions
     plugins {
         val kotlinVersion: String by settings
+        val kotlin_version: String? by settings
+        val finalKotlinVersion = kotlin_version ?: kotlinVersion
         val dokkaVersion: String by settings
         val kotlinxBenchmarkVersion: String by settings
         val smithyGradleVersion: String by settings
         id("org.jetbrains.dokka") version dokkaVersion
-        id("org.jetbrains.kotlin.jvm") version kotlinVersion
-        id("org.jetbrains.kotlin.multiplatform") version kotlinVersion
+        id("org.jetbrains.kotlin.jvm") version finalKotlinVersion
+        id("org.jetbrains.kotlin.multiplatform") version finalKotlinVersion
         id("org.jetbrains.kotlinx.benchmark") version kotlinxBenchmarkVersion
         id("software.amazon.smithy") version smithyGradleVersion
+        kotlin("plugin.serialization") version finalKotlinVersion
     }
 }
 

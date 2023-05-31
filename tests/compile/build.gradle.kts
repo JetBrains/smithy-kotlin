@@ -12,6 +12,8 @@ extra["moduleName"] = "software.amazon.smithy.kotlin.codegen"
 val smithyVersion: String by project
 val kotestVersion: String by project
 val kotlinVersion: String by project
+val kotlin_version: String? by project
+val finalKotlinVersion = kotlin_version ?: kotlinVersion
 val junitVersion: String by project
 val kotlinCompileTestingVersion: String by project
 
@@ -30,7 +32,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
     testImplementation("com.github.tschuchortdev:kotlin-compile-testing:$kotlinCompileTestingVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$finalKotlinVersion")
 }
 
 tasks.test {

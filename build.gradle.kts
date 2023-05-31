@@ -5,17 +5,20 @@
 import java.util.Properties
 
 buildscript {
+
+    val kotlin_repo_url: String? by project
+    logger.info("[COMMUNITY_PROJECT_BUILD] kotlin repository url: $kotlin_repo_url")
     repositories {
         mavenCentral()
         google()
-        maven {
-            url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
-        }
+        kotlin_repo_url?.also { maven(it) }
     }
 
     val kotlinVersion: String by project
+    val kotlin_version: String? by project
+    val finalKotlinVersion = kotlin_version ?: kotlinVersion
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$finalKotlinVersion")
     }
 }
 
@@ -23,7 +26,7 @@ plugins {
     kotlin("jvm") apply false
     id("org.jetbrains.dokka")
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.12.1"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.1"
 }
 
 allprojects {
@@ -195,4 +198,7 @@ apiValidation {
             "compile",
         ),
     )
+//    WA to disable failures of validator
+//    when K2 is enabled see https://github.com/Kotlin/binary-compatibility-validator/issues/139
+    validationDisabled = findProperty("kotlin.experimental.tryK2") == "true"
 }

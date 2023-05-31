@@ -9,6 +9,8 @@ extra["moduleName"] = "aws.smithy.kotlin.runtime.smithy.test"
 
 val coroutinesVersion: String by project
 val kotlinVersion: String by project
+val kotlin_version: String? by project
+val finalKotlinVersion = kotlin_version ?: kotlinVersion
 val kotlinxSerializationVersion: String by project
 
 kotlin {
@@ -21,7 +23,7 @@ kotlin {
                 implementation(project(":runtime:serde:serde-xml"))
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:$finalKotlinVersion")
 
                 // kotlinx-serialization::JsonElement allows comparing arbitrary JSON docs for equality
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
@@ -30,7 +32,7 @@ kotlin {
 
         jvmMain {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test:$finalKotlinVersion")
             }
         }
 

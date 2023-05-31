@@ -56,6 +56,8 @@ tasks.test {
 
 dependencies {
     val kotlinVersion: String by project
+    val kotlin_version: String? by project
+    val finalKotlinVersion = kotlin_version ?: kotlinVersion
     val coroutinesVersion: String by project
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
@@ -66,5 +68,5 @@ dependencies {
     implementation(project(":runtime:protocol:http-client"))
     api(project(":runtime:tracing:tracing-core"))
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$finalKotlinVersion")
 }

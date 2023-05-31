@@ -11,6 +11,8 @@ extra["skipPublish"] = true
 val coroutinesVersion: String by project
 val junitVersion: String by project
 val kotlinVersion: String by project
+val kotlin_version: String? by project
+val finalKotlinVersion = kotlin_version ?: kotlinVersion
 val kotlinxSerializationVersion: String by project
 val ktorVersion: String by project
 
@@ -20,8 +22,8 @@ kotlin {
             dependencies {
                 api(project(":runtime:auth:aws-signing-common"))
                 api(project(":runtime:auth:http-auth-aws"))
-                implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:$finalKotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$finalKotlinVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
                 implementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
             }
@@ -33,7 +35,7 @@ kotlin {
                 implementation(project(":runtime:protocol:http-test"))
                 implementation("io.ktor:ktor-http-cio:$ktorVersion")
                 implementation("io.ktor:ktor-utils:$ktorVersion")
-                implementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-junit5:$finalKotlinVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
             }
         }

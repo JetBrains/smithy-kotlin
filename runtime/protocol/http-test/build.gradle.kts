@@ -8,6 +8,8 @@ extra["moduleName"] = "aws.smithy.kotlin.runtime.httptest"
 
 val coroutinesVersion: String by project
 val kotlinVersion: String by project
+val kotlin_version: String? by project
+val finalKotlinVersion = kotlin_version ?: kotlinVersion
 val ktorVersion: String by project
 val kotlinxSerializationVersion: String by project
 
@@ -18,8 +20,8 @@ kotlin {
                 api(project(":runtime:protocol:http-client"))
 
                 implementation(project(":runtime:logging"))
-                implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:$finalKotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$finalKotlinVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
             }
         }
@@ -30,7 +32,7 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-junit5:$finalKotlinVersion")
                 api("io.ktor:ktor-server-cio:$ktorVersion")
             }
         }

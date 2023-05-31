@@ -18,6 +18,8 @@ version = sdkVersion
 
 val smithyVersion: String by project
 val kotlinVersion: String by project
+val kotlin_version: String? by project
+val finalKotlinVersion = kotlin_version ?: kotlinVersion
 val junitVersion: String by project
 val kotestVersion: String by project
 val jsoupVersion: String by project
@@ -30,8 +32,8 @@ dependencies {
     // Test dependencies
     implementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     implementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
-    implementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-test:$finalKotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-test-junit5:$finalKotlinVersion")
 }
 
 // unlike the runtime, smithy-kotlin codegen package is not expected to run on Android...we can target 1.8
