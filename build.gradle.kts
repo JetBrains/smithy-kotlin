@@ -34,9 +34,9 @@ allprojects {
         mavenLocal()
         mavenCentral()
         google()
-        maven {
-            url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
-        }
+        val kotlin_repo_url: String? by project
+        logger.info("[COMMUNITY_PROJECT_BUILD] kotlin repository url: $kotlin_repo_url")
+        kotlin_repo_url?.also { maven(it) }
     }
 
     tasks.withType<org.jetbrains.dokka.gradle.AbstractDokkaTask>().configureEach {
