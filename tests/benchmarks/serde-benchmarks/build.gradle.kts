@@ -142,3 +142,8 @@ val stageGeneratedSources = tasks.register("stageGeneratedSources") {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     dependsOn(stageGeneratedSources)
 }
+
+//WA after update to Gradle 8.1.1
+tasks.named("smithyValidate") {
+    dependsOn("metadataJar")
+}

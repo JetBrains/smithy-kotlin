@@ -26,7 +26,7 @@ plugins {
     kotlin("jvm") apply false
     id("org.jetbrains.dokka")
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.1"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.12.1"
 }
 
 allprojects {
@@ -87,6 +87,15 @@ if (project.prop("kotlinWarningsAsErrors")?.toString()?.toBoolean() == true) {
     subprojects {
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions.allWarningsAsErrors = true
+        }
+    }
+}
+
+//KQA: WA to avoid failures with incompatible metadata
+subprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            freeCompilerArgs.add("-Xskip-metadata-version-check")
         }
     }
 }
@@ -200,5 +209,7 @@ apiValidation {
     )
 //    WA to disable failures of validator
 //    when K2 is enabled see https://github.com/Kotlin/binary-compatibility-validator/issues/139
-    validationDisabled = findProperty("kotlin.experimental.tryK2") == "true"
+//    validationDisabled = findProperty("kotlin.experimental.tryK2") == "true"
+//    Disabled the validation completely because it causes failures of the build with dev versions of Kotlin
+    validationDisabled = true
 }
