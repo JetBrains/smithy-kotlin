@@ -211,5 +211,6 @@ apiValidation {
 //    when K2 is enabled see https://github.com/Kotlin/binary-compatibility-validator/issues/139
 //    validationDisabled = findProperty("kotlin.experimental.tryK2") == "true"
 //    Disabled the validation completely because it causes failures of the build with dev versions of Kotlin
+//    https://github.com/Kotlin/kotlinx-atomicfu/issues/281
     validationDisabled = true
 }

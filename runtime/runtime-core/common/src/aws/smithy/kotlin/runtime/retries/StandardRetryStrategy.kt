@@ -9,6 +9,7 @@ import aws.smithy.kotlin.runtime.retries.delay.*
 import aws.smithy.kotlin.runtime.retries.policy.RetryDirective
 import aws.smithy.kotlin.runtime.retries.policy.RetryPolicy
 import kotlinx.coroutines.CancellationException
+import kotlin.time.ExperimentalTime
 
 /**
  * Implements a retry strategy utilizing backoff delayer and a token bucket for rate limiting and circuit breaking. Note
@@ -21,6 +22,7 @@ import kotlinx.coroutines.CancellationException
  */
 public class StandardRetryStrategy(
     override val options: StandardRetryStrategyOptions = StandardRetryStrategyOptions.Default,
+    @OptIn(ExperimentalTime::class)
     private val tokenBucket: RetryTokenBucket = StandardRetryTokenBucket(),
     private val delayProvider: DelayProvider = ExponentialBackoffWithJitter(),
 ) : RetryStrategy {
