@@ -46,12 +46,13 @@ fun writeGradleBuild(
         val pluginName = if (isKmp) "multiplatform" else "jvm"
 
         write(
-            "kotlin(\"$pluginName\") #W",
-            { w: AbstractCodeWriter<*> ->
-                if (isRootModule) {
-                    w.write("version #S", KOTLIN_COMPILER_VERSION)
-                }
-            },
+            "kotlin(\"$pluginName\")",
+//            this code is not needed, but I will save it for history
+//            { w: AbstractCodeWriter<*> ->
+//                if (isRootModule) {
+//                    w.write("version #S", KOTLIN_COMPILER_VERSION)
+//                }
+//            },
         )
     }
 
@@ -77,7 +78,30 @@ fun writeGradleBuild(
     val contents = writer.toString()
     manifest.writeFile("build.gradle.kts", contents)
     if (settings.build.generateFullProject) {
-        manifest.writeFile("settings.gradle.kts", "")
+        val pluginName = if (isKmp) "multiplatform" else "jvm"
+        manifest.writeFile("settings.gradle.kts",
+            """
+            |pluginManagement {
+            |    repositories {
+            |        val kotlin_repo_url: String? by settings
+            |        logger.info("[COMMUNITY_PROJECT_BUILD] kotlin repository url: ${"$"}kotlin_repo_url")
+            |        mavenLocal()
+            |        mavenCentral()
+            |        maven("https://plugins.gradle.org/m2/")
+            |        google()
+            |        gradlePluginPortal()
+            |        kotlin_repo_url?.also { maven(it) }
+            |    }
+            |
+            |    // configure default plugin versions
+            |    plugins {
+            |        val kotlinVersion: String by settings
+            |        val kotlin_version: String? by settings
+            |        val finalKotlinVersion = kotlin_version ?: kotlinVersion
+            |        id("org.jetbrains.kotlin.$pluginName") version finalKotlinVersion
+            |    }
+            |}
+            """.trimMargin())
     }
 }
 
@@ -230,6 +254,9 @@ private val repositoryRenderer: InlineCodeWriter = {
             repositories {
                 mavenLocal()
                 mavenCentral()
+                val kotlin_repo_url: String? by project
+                logger.info("[COMMUNITY_PROJECT_BUILD] kotlin repository url: ${'$'}kotlin_repo_url")
+                kotlin_repo_url?.also { maven(it) }
             }
         """.trimIndent(),
     )
