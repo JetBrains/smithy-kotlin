@@ -16,52 +16,52 @@ public actual sealed interface SdkBufferedSource : SdkSource, ReadableByteChanne
     public actual val buffer: SdkBuffer
 
     /**
-     * Discards [byteCount] bytes from this source. Throws [IOException] if source is exhausted before [byteCount]
+     * Discards [byteCount] bytes from this source. Throws [LocalIOException] if source is exhausted before [byteCount]
      * bytes can be discarded.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun skip(byteCount: Long)
 
     /**
      * Read a single byte from this source and return it
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readByte(): Byte
 
     /**
      * Read two bytes in big-endian order from this source and returns them as a short.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readShort(): Short
 
     /**
      * Read two bytes in little-endian order from this source and returns them as a short.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readShortLe(): Short
 
     /**
      * Read eight bytes in big-endian order from this source and returns them as a long.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readLong(): Long
 
     /**
      * Read eight bytes in little-endian order from this source and returns them as a long.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readLongLe(): Long
 
     /**
      * Read four bytes in big-endian order from this source and returns them as an int.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readInt(): Int
 
     /**
      * Read four bytes in little-endian order from this source and returns them as an int.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readIntLe(): Int
 
     /**
@@ -69,13 +69,13 @@ public actual sealed interface SdkBufferedSource : SdkSource, ReadableByteChanne
      * the total number of bytes written which will be 0 if this source
      * is exhausted.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readAll(sink: SdkSink): Long
 
     /**
      * Read up to [limit] bytes and write them to [sink] starting at [offset]
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun read(sink: ByteArray, offset: Int, limit: Int): Int
 
     /**
@@ -84,13 +84,13 @@ public actual sealed interface SdkBufferedSource : SdkSource, ReadableByteChanne
      * **Caution** This may pull a large amount of data into memory, only do this if you are sure
      * the contents fit into memory. Throws [IllegalArgumentException] if the buffer size exceeds [Int.MAX_VALUE].
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readByteArray(): ByteArray
 
     /**
      * Reads [byteCount] bytes from this source and returns them as a byte array
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readByteArray(byteCount: Long): ByteArray
 
     /**
@@ -99,13 +99,13 @@ public actual sealed interface SdkBufferedSource : SdkSource, ReadableByteChanne
      * **Caution** This may pull a large amount of data into memory, only do this if you are sure
      * the contents fit into memory. Throws [IllegalArgumentException] if the buffer size exceeds [Int.MAX_VALUE].
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readUtf8(): String
 
     /**
      * Reads [byteCount] bytes from this source, decodes them as UTF-8, and returns the string.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun readUtf8(byteCount: Long): String
 
     /**
@@ -130,13 +130,13 @@ public actual sealed interface SdkBufferedSource : SdkSource, ReadableByteChanne
      * Returns true when the buffer contains at least [byteCount] bytes. False if the source
      * is exhausted before the requested number of bytes could be read
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun request(byteCount: Long): Boolean
 
     /**
      * Returns when the buffer contains at least [byteCount] bytes or throws [EOFException]
      * if the source is exhausted before the requested number of bytes could be read
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public actual fun require(byteCount: Long): Unit
 }

@@ -18,7 +18,7 @@ public expect sealed interface SdkBufferedSource : SdkSource {
     public val buffer: SdkBuffer
 
     /**
-     * Discards [byteCount] bytes from this source. Throws [IOException] if source is exhausted before [byteCount]
+     * Discards [byteCount] bytes from this source. Throws [LocalIOException] if source is exhausted before [byteCount]
      * bytes can be discarded.
      */
     public fun skip(byteCount: Long): Unit

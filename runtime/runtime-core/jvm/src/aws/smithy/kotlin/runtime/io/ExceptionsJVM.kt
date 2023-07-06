@@ -5,6 +5,10 @@
 
 package aws.smithy.kotlin.runtime.io
 
-public actual typealias IOException = java.io.IOException
+// WA for Default argument values inside expect declaration 'IOException' are not allowed if it is
+// actualized via typealias. Possible fix is to remove default argument values in members:
+//    expect constructor(message: String? = ...): IOException
+// public actual typealias IOException = java.io.IOException
+public actual typealias LocalIOException = java.io.IOException
 
 public actual typealias EOFException = java.io.EOFException

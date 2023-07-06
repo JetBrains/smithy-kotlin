@@ -21,9 +21,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
 
 class StandardRetryIntegrationTest {
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
     @Test
     fun testIntegrationCases() = runTest {
         val testCases = standardRetryIntegrationTestCases

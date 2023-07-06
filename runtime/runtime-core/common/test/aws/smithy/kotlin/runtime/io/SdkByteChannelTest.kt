@@ -82,7 +82,7 @@ class SdkByteChannelTest {
         source.writeByte(4)
 
         // write to closed channel
-        assertFailsWith<ClosedWriteChannelException> {
+        assertFailsWith<LocalIOException> {
             chan.write(source)
         }
     }

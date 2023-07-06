@@ -24,6 +24,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RetryMiddlewareTest {
@@ -40,6 +41,7 @@ class RetryMiddlewareTest {
             }
     }
 
+    @OptIn(ExperimentalTime::class)
     @Test
     fun testRetryMiddleware() = runTest {
         val req = HttpRequestBuilder()

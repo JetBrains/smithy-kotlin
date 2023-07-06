@@ -158,7 +158,7 @@ internal class RealSdkByteChannel(
     // write side only
     private fun ensureNotClosed() {
         if (isClosedForWrite) {
-            throw closedCause ?: ClosedWriteChannelException("Channel $this is already closed")
+            throw closedCause ?: LocalIOException("Channel $this is already closed")
         }
     }
 

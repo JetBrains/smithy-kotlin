@@ -34,19 +34,19 @@ public interface SdkSink : Closeable {
     /**
      * Removes [byteCount] bytes from [source] and appends them to this.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public fun write(source: SdkBuffer, byteCount: Long): Unit
 
     /**
      * Pushes all buffered bytes to their final destination
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public fun flush(): Unit
 
     /**
      * Pushes all buffered bytes to their final destination and releases resources held by this sink.
      * It is an error to write to a closed sink. This is an idempotent operation.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     override fun close(): Unit
 }

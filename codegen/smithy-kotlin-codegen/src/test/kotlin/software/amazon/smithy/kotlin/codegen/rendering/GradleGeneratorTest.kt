@@ -74,10 +74,13 @@ class GradleGeneratorTest {
         repositories {
             mavenLocal()
             mavenCentral()
+            val kotlin_repo_url: String? by project
+            logger.info("[COMMUNITY_PROJECT_BUILD] kotlin repository url: ${"$"}kotlin_repo_url")
+            kotlin_repo_url?.also { maven(it) }
         }
         """.trimIndent()
         val expectedVersion = """
-            kotlin("jvm") version
+            kotlin("jvm")
         """.trimIndent()
         val expectedExplicitApi = """
             explicitApi()
@@ -115,7 +118,7 @@ class GradleGeneratorTest {
         writeGradleBuild(settings, manifest, dependencies)
         val contents = manifest.getFileString("build.gradle.kts").get()
         val expectedVersion = """
-            kotlin("multiplatform") version
+            kotlin("multiplatform")
         """.trimIndent()
         val expectedExplicitApi = """
             explicitApi()

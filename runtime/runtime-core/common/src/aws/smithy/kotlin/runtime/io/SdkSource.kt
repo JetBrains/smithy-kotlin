@@ -28,14 +28,14 @@ public interface SdkSource : Closeable {
      * Remove at least 1 byte, and up-to [limit] bytes from this and appends them to [sink].
      * Returns the number of bytes read, or -1 if this source is exhausted.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     public fun read(sink: SdkBuffer, limit: Long): Long
 
     /**
      * Closes this source and releases any resources held. It is an error to read from a closed
      * source. This is an idempotent operation.
      */
-    @Throws(IOException::class)
+    @Throws(LocalIOException::class)
     override fun close()
 }
 
@@ -61,7 +61,7 @@ public expect fun SdkSource.toSdkByteReadChannel(coroutineScope: CoroutineScope?
  * @throws [IllegalArgumentException] when [byteCount] is less than zero
  * @throws [EOFException] when the source is exhausted before [byteCount] bytes could be read
  */
-@Throws(IOException::class)
+@Throws(LocalIOException::class)
 public fun SdkSource.readFully(sink: SdkBuffer, byteCount: Long) {
     require(byteCount >= 0L) { "Invalid length ($byteCount) must be >= 0L" }
 
