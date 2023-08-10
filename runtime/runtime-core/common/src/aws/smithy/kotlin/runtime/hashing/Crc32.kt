@@ -30,7 +30,14 @@ public abstract class Crc32Base : HashFunction {
  * directly to avoid doing the integer conversion yourself.
  */
 @InternalApi
-public expect class Crc32() : Crc32Base
+public expect class Crc32() : Crc32Base {
+    override fun digestValue(): UInt
+    override val digestSizeBytes: Int
+    override val blockSizeBytes: Int
+    override fun digest(): ByteArray
+    override fun reset()
+    override fun update(input: ByteArray, offset: Int, length: Int)
+}
 
 /**
  * Compute the MD5 hash of the current [ByteArray]

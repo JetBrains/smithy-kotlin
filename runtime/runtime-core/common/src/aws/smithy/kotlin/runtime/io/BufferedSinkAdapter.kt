@@ -7,8 +7,27 @@ package aws.smithy.kotlin.runtime.io
 
 import aws.smithy.kotlin.runtime.io.internal.toOkio
 import aws.smithy.kotlin.runtime.io.internal.toSdk
+import java.io.OutputStream
+import java.nio.ByteBuffer
 
-internal expect class BufferedSinkAdapter(sink: okio.BufferedSink) : SdkBufferedSink
+internal expect class BufferedSinkAdapter(sink: okio.BufferedSink) : SdkBufferedSink {
+    override val buffer: SdkBuffer
+    override fun write(source: ByteArray, offset: Int, limit: Int)
+    override fun writeAll(source: SdkSource): Long
+    override fun write(source: SdkSource, byteCount: Long)
+    override fun writeUtf8(string: String, start: Int, endExclusive: Int)
+    override fun writeByte(x: Byte)
+    override fun writeShort(x: Short)
+    override fun writeShortLe(x: Short)
+    override fun writeInt(x: Int)
+    override fun writeIntLe(x: Int)
+    override fun writeLong(x: Long)
+    override fun writeLongLe(x: Long)
+    override fun flush()
+    override fun emit()
+    override fun write(source: SdkBuffer, byteCount: Long)
+    override fun close()
+}
 
 // base class that fills in most of the common implementation, platforms just need to implement the platform specific
 // part of the interface
