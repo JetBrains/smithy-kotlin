@@ -8,7 +8,29 @@ package aws.smithy.kotlin.runtime.io
 import aws.smithy.kotlin.runtime.io.internal.toOkio
 import aws.smithy.kotlin.runtime.io.internal.toSdk
 
-internal expect class BufferedSourceAdapter(source: okio.BufferedSource) : SdkBufferedSource
+internal expect class BufferedSourceAdapter(source: okio.BufferedSource) : SdkBufferedSource {
+    override val buffer: SdkBuffer
+    override fun skip(byteCount: Long)
+    override fun readByte(): Byte
+    override fun readShort(): Short
+    override fun readShortLe(): Short
+    override fun readLong(): Long
+    override fun readLongLe(): Long
+    override fun readInt(): Int
+    override fun readIntLe(): Int
+    override fun readAll(sink: SdkSink): Long
+    override fun read(sink: ByteArray, offset: Int, limit: Int): Int
+    override fun readByteArray(): ByteArray
+    override fun readByteArray(byteCount: Long): ByteArray
+    override fun readUtf8(): String
+    override fun readUtf8(byteCount: Long): String
+    override fun peek(): SdkBufferedSource
+    override fun exhausted(): Boolean
+    override fun request(byteCount: Long): Boolean
+    override fun require(byteCount: Long)
+    override fun read(sink: SdkBuffer, limit: Long): Long
+    override fun close()
+}
 
 // base class that fills in most of the common implementation, platforms just need to implement the platform specific
 // part of the interface
