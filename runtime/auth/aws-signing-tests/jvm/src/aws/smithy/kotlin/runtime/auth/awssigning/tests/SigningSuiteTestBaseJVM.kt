@@ -93,6 +93,9 @@ public typealias SigningStateProvider = suspend (HttpRequest, AwsSigningConfig) 
 
 // FIXME - move to common test (will require ability to access test resources in a KMP compatible way)
 
+
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // necessary so arg factory methods can handle disabledTests
 public actual abstract class SigningSuiteTestBase : HasSigner {
     private val testDirPaths: List<Path> by lazy {
