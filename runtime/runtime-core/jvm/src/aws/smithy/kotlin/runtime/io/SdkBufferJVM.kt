@@ -10,6 +10,8 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.ByteBuffer
 
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 public actual class SdkBuffer : SdkBufferedSource, SdkBufferedSink {
     public actual constructor() : this(okio.Buffer())
 

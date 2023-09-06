@@ -8,6 +8,8 @@ package aws.smithy.kotlin.runtime.io
 import java.io.InputStream
 import java.nio.ByteBuffer
 
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 internal actual class BufferedSourceAdapter actual constructor(
     source: okio.BufferedSource,
 ) : AbstractBufferedSourceAdapter(source), SdkBufferedSource {

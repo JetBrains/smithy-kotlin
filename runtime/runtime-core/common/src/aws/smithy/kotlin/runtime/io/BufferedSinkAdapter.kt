@@ -9,7 +9,8 @@ import aws.smithy.kotlin.runtime.io.internal.toOkio
 import aws.smithy.kotlin.runtime.io.internal.toSdk
 import java.io.OutputStream
 import java.nio.ByteBuffer
-
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 internal expect class BufferedSinkAdapter(sink: okio.BufferedSink) : SdkBufferedSink {
     override val buffer: SdkBuffer
     override fun write(source: ByteArray, offset: Int, limit: Int)

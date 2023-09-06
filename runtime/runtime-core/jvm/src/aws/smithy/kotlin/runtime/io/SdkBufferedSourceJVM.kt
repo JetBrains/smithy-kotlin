@@ -8,6 +8,8 @@ package aws.smithy.kotlin.runtime.io
 import java.io.InputStream
 import java.nio.channels.ReadableByteChannel
 
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 public actual sealed interface SdkBufferedSource : SdkSource, ReadableByteChannel {
 
     /**

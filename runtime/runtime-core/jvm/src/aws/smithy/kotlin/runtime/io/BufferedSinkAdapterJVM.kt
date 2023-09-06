@@ -8,6 +8,8 @@ package aws.smithy.kotlin.runtime.io
 import java.io.OutputStream
 import java.nio.ByteBuffer
 
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 internal actual class BufferedSinkAdapter actual constructor(
     sink: okio.BufferedSink,
 ) : AbstractBufferedSinkAdapter(sink), SdkBufferedSink {

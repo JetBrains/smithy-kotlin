@@ -5,4 +5,6 @@
 
 package aws.smithy.kotlin.runtime.io
 
+@OptIn(ExperimentalMultiplatform::class)
+@AllowDifferentMembersInActual
 public actual typealias Closeable = java.io.Closeable
