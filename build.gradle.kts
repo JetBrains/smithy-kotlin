@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import java.util.Properties
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 buildscript {
 
@@ -62,6 +64,21 @@ allprojects {
             """,
         )
         pluginsMapConfiguration.set(pluginConfigMap)
+        tasks.withType<KotlinCompilationTask<*>>().configureEach {
+            compilerOptions {
+                val kotlin_language_version: String? by project
+                logger.info("[COMMUNITY_PROJECT_BUILD] kotlin language version: $kotlin_language_version")
+                kotlin_language_version?.also {
+                    languageVersion.set(KotlinVersion.fromVersion(it))
+                }
+
+                val kotlin_api_version: String? by project
+                logger.info("[COMMUNITY_PROJECT_BUILD] kotlin api version: $kotlin_api_version")
+                kotlin_api_version?.also {
+                    apiVersion.set(KotlinVersion.fromVersion(it))
+                }
+            }
+        }
     }
 }
 
