@@ -55,6 +55,10 @@ val generateSdkRuntimeVersion by tasks.registering {
     }
 }
 
+kotlin{
+    jvmToolchain(8)
+}
+
 // unlike the runtime, smithy-kotlin codegen package is not expected to run on Android...we can target 1.8
 tasks.compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
