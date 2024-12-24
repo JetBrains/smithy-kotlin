@@ -5,7 +5,6 @@
 
 pluginManagement {
     repositories {
-        mavenLocal()
         mavenCentral()
         gradlePluginPortal()
         maven {
@@ -15,18 +14,16 @@ pluginManagement {
                 includeGroupByRegex("""aws\.sdk\.kotlin.*""")
             }
         }
+
+        val kotlin_repo_url: String? by settings
+        kotlin_repo_url?.let { maven(it) }
+
+        mavenLocal()
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        mavenLocal {
-            content {
-                excludeGroupByRegex("""org\.jetbrains\.kotlin.*""")
-                excludeGroupByRegex("""org\.jetbrains\.kotlinx.*""")
-                excludeGroup("org.jetbrains")
-            }
-        }
         mavenCentral()
         google()
         maven {
@@ -34,6 +31,19 @@ dependencyResolutionManagement {
             url = java.net.URI("https://d2gys1nrxnjnyg.cloudfront.net/releases")
             content {
                 includeGroupByRegex("""aws\.sdk\.kotlin.*""")
+            }
+        }
+
+        val kotlin_repo_url: String? by settings
+        kotlin_repo_url?.let { maven(it) }
+        mavenLocal()
+    }
+
+    versionCatalogs {
+        create("libs") {
+            val kotlin_version: String? by settings
+            if (kotlin_version != null) {
+                version("kotlin-version", kotlin_version)
             }
         }
     }
