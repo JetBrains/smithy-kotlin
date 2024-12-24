@@ -29,6 +29,11 @@ buildscript {
         https://github.com/Kotlin/dokka/issues/3194#issuecomment-1929382630
          */
         classpath(enforcedPlatform("com.fasterxml.jackson:jackson-bom:2.22.0"))
+
+
+        // WA for https://youtrack.jetbrains.com/issue/KT-73357/
+        // remove after updated dependencies will not bring an old version.
+        classpath("org.jetbrains.kotlin:kotlin-compiler-embeddable:${libs.versions.kotlin.version.get()}")
     }
 
     configurations.classpath {
