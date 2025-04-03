@@ -43,7 +43,7 @@ kotlin.sourceSets.getByName("main") {
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     dependsOn(tasks.generateSmithyProjections)
 }
 
