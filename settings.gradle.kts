@@ -40,10 +40,13 @@ dependencyResolutionManagement {
     }
 
     versionCatalogs {
-        create("libs") {
-            val kotlin_version: String? by settings
-            if (kotlin_version != null) {
-                version("kotlin-version", kotlin_version)
+        all {
+            if (name == "libs") {
+                val kotlinVersionOverride = providers.gradleProperty("kotlin_version")
+                if (kotlinVersionOverride.isPresent) {
+                    println("[Main Build] Overriding kotlin-version to ${kotlinVersionOverride.get()}")
+                    version("kotlin-version", kotlinVersionOverride.get())
+                }
             }
         }
     }
