@@ -161,16 +161,36 @@ fun HasConfigurableKotlinCompilerOptions<*>.configureCompilerOptions() {
         val kotlin_language_version: String? by project
 
         kotlin_language_version?.let {
-            println("[${project.name}] Custom LanguageVersion: $it")
             languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.fromVersion(it))
         }
 
         kotlin_api_version?.let {
-            println("[${project.name}] Custom ApiVersion: $it")
             apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.fromVersion(it))
         }
 
         freeCompilerArgs.add("-Xpartial-linkage-loglevel=ERROR")
+    }
+}
+
+// Summary logging for Kotlin version configuration
+gradle.projectsEvaluated {
+    val kotlin_api_version: String? by project
+    val kotlin_language_version: String? by project
+
+    if (kotlin_language_version != null || kotlin_api_version != null) {
+        val configuredProjects = subprojects.filter { subproject ->
+            subproject.plugins.hasPlugin("org.jetbrains.kotlin.jvm") ||
+                    subproject.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform") ||
+                    subproject.plugins.hasPlugin("org.jetbrains.kotlin.android")
+        }
+
+        println("=".repeat(80))
+        println("[smithy-kotlin] Kotlin version configuration summary:")
+        kotlin_language_version?.let { println("  Language version: $it") }
+        kotlin_api_version?.let { println("  API version: $it") }
+        println("  Applied to ${configuredProjects.size} subprojects:")
+        configuredProjects.forEach { println("    - ${it.path}") }
+        println("=".repeat(80))
     }
 }
 

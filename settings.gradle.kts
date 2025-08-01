@@ -44,7 +44,7 @@ dependencyResolutionManagement {
             if (name == "libs") {
                 val kotlinVersionOverride = providers.gradleProperty("kotlin_version")
                 if (kotlinVersionOverride.isPresent) {
-                    println("[Main Build] Overriding kotlin-version to ${kotlinVersionOverride.get()}")
+                    println("[Smithy Main Build] Overriding kotlin-version to ${kotlinVersionOverride.get()}")
                     version("kotlin-version", kotlinVersionOverride.get())
                 }
             }

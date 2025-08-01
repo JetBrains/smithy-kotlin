@@ -5,6 +5,22 @@
 
 rootProject.name = "buildSrc"
 
+pluginManagement {
+    repositories {
+        val kotlin_repo_url: String? by settings
+        kotlin_repo_url?.let { maven(it) }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    val kotlinVersion = providers.gradleProperty("kotlin_version").get()
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id.startsWith("org.jetbrains.kotlin"))
+                useVersion(kotlinVersion)
+        }
+    }
+}
+
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
@@ -18,7 +34,7 @@ dependencyResolutionManagement {
             from(files("../gradle/libs.versions.toml"))
             val kotlinVersionOverride = providers.gradleProperty("kotlin_version")
             if (kotlinVersionOverride.isPresent) {
-                println("[buildSrc] Overriding kotlin-version to ${kotlinVersionOverride.get()}")
+                println("[Smithy buildSrc] Overriding kotlin-version to ${kotlinVersionOverride.get()}")
                 version("kotlin-version", kotlinVersionOverride.get())
             }
         }
