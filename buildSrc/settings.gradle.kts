@@ -12,11 +12,14 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-    val kotlinVersion = providers.gradleProperty("kotlin_version").get()
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id.startsWith("org.jetbrains.kotlin"))
-                useVersion(kotlinVersion)
+    val kotlinVersionProvider = providers.gradleProperty("kotlin_version")
+    if (kotlinVersionProvider.isPresent) {
+        val kotlinVersion = kotlinVersionProvider.get()
+        resolutionStrategy {
+            eachPlugin {
+                if (requested.id.id.startsWith("org.jetbrains.kotlin"))
+                    useVersion(kotlinVersion)
+            }
         }
     }
 }
